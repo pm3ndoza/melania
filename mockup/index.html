@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Melania Sweets · Pastelería artesanal (mockup)</title>
+  <!-- Solo para el mockup: en Wix se usan las fuentes del panel de tipografía -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Nunito:wght@400;600;800&display=swap" rel="stylesheet" />
+  <style>
+    /*
+     * Sistema de color: los fondos de sección son los mismos de las fotos,
+     * así el producto parece recortado y la página se ve de una sola pieza.
+     */
+    :root {
+      --foto-rosa: #ffb8c4;   /* fondo de las fotos rosadas */
+      --foto-naranja: #f4af65; /* fondo de las fotos naranjas */
+      --rosa: #e0576b;         /* marca: botones y acentos */
+      --vino: #6e3444;         /* texto principal: ciruela, más claro que vino */
+      --naranja: #e98b42;      /* naranja de las gotas de la caja */
+      --naranja-claro: #fde4cc;
+      --crema: #fff8f1;        /* fondo neutro, nunca gris */
+      --blanco: #ffffff;
+      --radio: 1.5rem;
+      --sombra: 0 14px 34px rgb(74 37 48 / 0.12);
+      --suave: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 5rem; }
+    /* Cursor con el iso de la marca (punto activo en el centro) */
+    body { cursor: url(img/cursor-32.svg) 16 16, auto; }
+    a, button { cursor: url(img/cursor-hover-48.svg) 24 24, pointer; }
+    body { margin: 0; font-family: Nunito, system-ui, sans-serif; color: var(--vino); background: var(--crema); line-height: 1.6; }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; }
+    h1, h2, h3 { font-family: Fraunces, Georgia, serif; line-height: 1.08; margin: 0 0 0.75rem; letter-spacing: -0.01em; }
+    h2 { font-size: clamp(1.9rem, 4.2vw, 2.8rem); }
+    p { margin: 0 0 1rem; }
+
+    .contenedor { max-width: 72rem; margin: 0 auto; padding: 0 1.25rem; }
+    .seccion { padding: clamp(3.5rem, 8vw, 6rem) 0; }
+    .cabecera { display: flex; align-items: end; justify-content: space-between; gap: 1rem; margin-bottom: 2rem; }
+    .cabecera p { margin: 0; max-width: 32rem; }
+    .eyebrow { display: inline-block; font-weight: 800; font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--rosa); margin-bottom: 0.5rem; }
+    .link { font-weight: 800; text-decoration: none; color: var(--rosa); white-space: nowrap; }
+    .link:hover { text-decoration: underline; }
+
+    /* Botones: uno lleno y uno de borde, siempre los mismos */
+    .botones { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+    .boton { display: inline-flex; align-items: center; padding: 0.95rem 1.7rem; border-radius: 999px; font-weight: 800; text-decoration: none; transition: transform 0.3s var(--suave), box-shadow 0.3s; }
+    .boton:hover { transform: translateY(-2px); box-shadow: var(--sombra); }
+    .boton--lleno { background: var(--vino); color: var(--blanco); }
+    .boton--lleno:hover { background: var(--naranja); color: var(--vino); }
+    /* Iso de la marca como detalle, nunca encima del texto */
+    .iso { display: inline-block; width: 2.2rem; vertical-align: middle; }
+    .boton--borde { border: 2px solid var(--vino); color: var(--vino); }
+
+    /* Header: fondo sólido, nada pasa por detrás */
+    .header { position: sticky; top: 0; z-index: 10; background: var(--crema); border-bottom: 1px solid rgb(74 37 48 / 0.08); }
+    .header .contenedor { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; padding-block: 0.65rem; }
+    .header img { height: 2.8rem; width: auto; }
+    .header nav { display: flex; gap: 1.75rem; }
+    .header nav a { text-decoration: none; font-weight: 600; }
+    .header nav a:hover { color: var(--rosa); }
+    .header .boton { padding: 0.6rem 1.25rem; }
+
+    /* Hero: el fondo es el rosa de la foto, la caja queda "flotando" */
+    .hero { background: #feb7bf; overflow: hidden; }
+    .hero .contenedor { display: grid; align-items: center; gap: 1rem; }
+    .hero h1 { font-size: clamp(2.5rem, 5.8vw, 4.3rem); }
+    .hero h1 em { font-style: italic; color: var(--blanco); }
+    .hero p { font-size: 1.15rem; max-width: 29rem; }
+    /* Fundido solo en el borde de la foto, para que no se note el recuadro */
+    .hero__foto, .regalo img {
+      -webkit-mask-image: linear-gradient(to right, transparent, #000 9%, #000 91%, transparent), linear-gradient(to bottom, transparent, #000 5%, #000 88%, transparent);
+      -webkit-mask-composite: source-in;
+      mask-image: linear-gradient(to right, transparent, #000 9%, #000 91%, transparent), linear-gradient(to bottom, transparent, #000 5%, #000 88%, transparent);
+      mask-composite: intersect;
+    }
+    .hero__foto { width: min(100%, 31rem); margin-inline: auto; margin-block: 1rem; }
+
+    /* Más vendidos: misma tarjeta, mismo fondo de foto */
+    .grilla { display: grid; gap: 1.25rem; grid-template-columns: repeat(auto-fill, minmax(14.5rem, 1fr)); }
+    .producto { text-decoration: none; }
+    .producto img { border-radius: var(--radio); background: var(--foto-rosa); aspect-ratio: 1; object-fit: cover; transition: transform 0.4s var(--suave); }
+    .producto:hover img { transform: scale(1.03); }
+    .producto h3 { font-size: 1.2rem; margin: 0.9rem 0 0.15rem; }
+    .producto span { display: inline-block; font-weight: 800; color: var(--vino); background: var(--naranja-claro); padding: 0.1rem 0.7rem; border-radius: 999px; }
+
+    /* Categorías: foto + nombre, sin marcos anidados */
+    .categorias { display: grid; gap: 1.25rem; grid-template-columns: repeat(auto-fill, minmax(14.5rem, 1fr)); }
+    .categoria { position: relative; border-radius: var(--radio); overflow: hidden; text-decoration: none; background: var(--foto-rosa); }
+    .categoria img { aspect-ratio: 3 / 4; object-fit: cover; width: 100%; transition: transform 0.5s var(--suave); }
+    .categoria:hover img { transform: scale(1.04); }
+    .categoria span { position: absolute; left: 1rem; bottom: 1rem; background: var(--blanco); padding: 0.45rem 1.1rem; border-radius: 999px; font-family: Fraunces, Georgia, serif; font-weight: 700; font-size: 1.15rem; }
+
+    /* Franja de regalo: el naranja de la foto */
+    .regalo { background: #f4b067; overflow: hidden; }
+    .regalo .contenedor { display: grid; align-items: center; gap: 1rem; }
+    .regalo img { width: min(100%, 28rem); margin-inline: auto; margin-block: 1.5rem; }
+    .regalo .precio { font-family: Fraunces, Georgia, serif; font-size: 1.6rem; font-weight: 700; margin-bottom: 1.5rem; }
+
+    /* Mayoristas e historia: foto redondeada + texto */
+    .dupla .contenedor { display: grid; align-items: center; gap: 2.5rem; }
+    .dupla img { border-radius: var(--radio); aspect-ratio: 4 / 5; object-fit: cover; width: min(100%, 26rem); margin-inline: auto; }
+    .lista { list-style: none; padding: 0; margin: 0 0 1.75rem; display: grid; gap: 0.5rem; }
+    .lista li::before { content: "✦"; color: var(--naranja); margin-right: 0.6rem; }
+    .hitos { display: grid; gap: 1rem; margin-top: 1.25rem; }
+    .hitos div { display: flex; gap: 1rem; align-items: baseline; }
+    .hitos b { font-family: Fraunces, Georgia, serif; font-size: 1.5rem; color: var(--rosa); border-bottom: 3px solid var(--naranja); min-width: 4.5rem; }
+    .blanco { background: var(--blanco); }
+
+    /* Instagram */
+    .instagram { text-align: center; }
+    .fotos-ig { display: grid; grid-template-columns: repeat(6, 1fr); gap: 0.5rem; margin-top: 1.75rem; }
+    .fotos-ig img { aspect-ratio: 1; object-fit: cover; border-radius: 0.75rem; }
+
+    /* Contacto y footer */
+    .contacto { background: var(--rosa); color: var(--blanco); text-align: center; }
+    .contacto p { max-width: 34rem; margin-inline: auto; margin-bottom: 1.75rem; }
+    .contacto .botones { justify-content: center; }
+    .contacto .boton--lleno { background: var(--blanco); color: var(--vino); }
+    .contacto .boton--borde { border-color: var(--blanco); color: var(--blanco); }
+    .footer { background: var(--vino); color: var(--crema); padding: 3rem 0 2rem; font-size: 0.95rem; }
+    .footer .contenedor { display: grid; gap: 2rem; grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr)); }
+    .footer h3 { font-size: 1.1rem; color: var(--naranja); }
+    .footer ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.35rem; }
+    .footer a { text-decoration: none; }
+    .footer a:hover { color: var(--foto-rosa); }
+    .footer small { display: block; text-align: center; margin-top: 2.5rem; opacity: 0.7; }
+
+    @media (min-width: 52rem) {
+      .hero .contenedor, .regalo .contenedor, .dupla .contenedor { grid-template-columns: 1fr 1fr; }
+      .dupla--inversa img { order: 2; }
+    }
+    @media (max-width: 51.99rem) {
+      .header nav { display: none; }
+      .hero .contenedor, .regalo .contenedor { text-align: center; padding-top: 1rem; }
+      .hero p { margin-inline: auto; }
+      .hero .iso { margin-inline: auto; }
+      .hero .botones, .regalo .botones { justify-content: center; }
+      .hero__foto { margin-block: 0.5rem 1.5rem; }
+      .cabecera { flex-direction: column; align-items: start; }
+      .fotos-ig { grid-template-columns: repeat(3, 1fr); }
+      .grilla, .categorias { grid-template-columns: 1fr 1fr; gap: 0.9rem; }
+      .producto h3 { font-size: 1rem; }
+    }
+
+    /* Una sola animación: aparecer suave al bajar */
+    @keyframes aparecer { from { opacity: 0; translate: 0 1.5rem; } }
+    @media (prefers-reduced-motion: no-preference) {
+      .hero h1, .hero p, .hero .botones { animation: aparecer 0.9s var(--suave) both; }
+      .hero p { animation-delay: 0.1s; }
+      .hero .botones { animation-delay: 0.2s; }
+      @supports (animation-timeline: view()) {
+        .revelar { animation: aparecer linear both; animation-timeline: view(); animation-range: entry 0% cover 25%; }
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="contenedor">
+      <a href="#"><img src="img/logo.webp" alt="Melania" width="805" height="408" /></a>
+      <nav aria-label="Secciones">
+        <a href="#tienda">Tienda</a>
+        <a href="#categorias">Categorías</a>
+        <a href="#mayoristas">Tu vitrina</a>
+        <a href="#nosotros">Nosotros</a>
+      </nav>
+      <a class="boton boton--lleno" href="#tienda">Comprar</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="contenedor">
+        <div>
+          <img class="iso" src="img/iso-color.svg" alt="" style="display:block;margin-bottom:0.75rem" /><span class="eyebrow" style="color:var(--vino)">Cookies y postres artesanales · Montevideo</span>
+          <h1>Pequeños momentos que hacen <em>más dulces</em> tus días</h1>
+          <p>Cookies gigantes, tortas y postres hechos a mano. Pedilos online y te los llevamos.</p>
+          <div class="botones">
+            <a class="boton boton--lleno" href="#tienda">Ver la tienda</a>
+            <a class="boton boton--borde" href="#contacto">Encargar por WhatsApp</a>
+          </div>
+        </div>
+        <img class="hero__foto" src="img/hero-pack6.webp" alt="Caja de 6 cookies Melania" width="816" height="790" fetchpriority="high" />
+      </div>
+    </section>
+
+    <section id="tienda" class="seccion">
+      <div class="contenedor">
+        <div class="cabecera">
+          <div><span class="eyebrow">Lo más pedido</span><h2>Nuestras cookies</h2></div>
+          <a class="link" href="#">Ver todos los productos →</a>
+        </div>
+        <div class="grilla">
+          <a class="producto revelar" href="#"><img src="img/cookie-kitkat.webp" alt="" loading="lazy" /><h3>Cookie Kit Kat</h3><span>$ ___</span></a>
+          <a class="producto revelar" href="#"><img src="img/cookie-red-velvet.webp" alt="" loading="lazy" /><h3>Cookie Red Velvet</h3><span>$ ___</span></a>
+          <a class="producto revelar" href="#"><img src="img/cookie-limon.webp" alt="" loading="lazy" /><h3>Cookie Limón</h3><span>$ 150</span></a>
+          <a class="producto revelar" href="#"><img src="img/cookie-oreo.webp" alt="" loading="lazy" /><h3>Cookie Oreo</h3><span>$ ___</span></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="regalo">
+      <div class="contenedor">
+        <img class="revelar" src="img/regalo-pack6.webp" alt="Pack de 6 cookies en su caja" loading="lazy" />
+        <div class="revelar">
+          <span class="eyebrow" style="color:var(--vino)">Para regalar</span>
+          <h2>Una caja que se abre con una sonrisa</h2>
+          <p>Elegí tus sabores favoritos en el pack de 2 o de 6 cookies. Llega listo para regalar.</p>
+          <p class="precio">desde $ 250</p>
+          <div class="botones"><a class="boton boton--lleno" href="#">Armar mi pack</a></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="categorias" class="seccion">
+      <div class="contenedor">
+        <div class="cabecera">
+          <div><span class="eyebrow">Comprá por categoría</span><h2>¿Qué se te antoja hoy?</h2></div>
+        </div>
+        <div class="categorias">
+          <a class="categoria revelar" href="#"><img src="img/cat-cookies.webp" alt="" loading="lazy" /><span>Cookies</span></a>
+          <a class="categoria revelar" href="#"><img src="img/cat-tortas.webp" alt="" loading="lazy" /><span>Tortas</span></a>
+          <a class="categoria revelar" href="#"><img src="img/cat-postres.webp" alt="" loading="lazy" /><span>Postres</span></a>
+          <a class="categoria revelar" href="#"><img src="img/cat-salados.webp" alt="" loading="lazy" /><span>Salados</span></a>
+        </div>
+      </div>
+    </section>
+
+    <section id="mayoristas" class="seccion dupla blanco">
+      <div class="contenedor">
+        <img class="revelar" src="img/mayoristas.webp" alt="Torta tres leches con el sello Melania" loading="lazy" />
+        <div class="revelar">
+          <span class="eyebrow">Melania en tu local</span>
+          <h2>Llevá nuestras delicias a tu vitrina</h2>
+          <p>Abastecemos cafeterías, almacenes y oficinas con productos frescos y presentación lista para vender.</p>
+          <ul class="lista">
+            <li>Precios mayoristas y pedidos semanales</li>
+            <li>Envases con nuestra marca</li>
+            <li>Catering para eventos y empresas</li>
+          </ul>
+          <a class="boton boton--lleno" href="#">Quiero vender Melania</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="nosotros" class="seccion dupla dupla--inversa">
+      <div class="contenedor">
+        <img class="revelar" src="img/historia.webp" alt="Torta red velvet" loading="lazy" />
+        <div class="revelar">
+          <span class="eyebrow">Nuestra historia</span>
+          <h2>Un laboratorio culinario hecho con amor</h2>
+          <p>Melania nació en una cocina de casa con una idea simple: que cada bocado sea un recuerdo feliz. Hoy seguimos igual, todo se hace a mano y en pequeñas tandas.</p>
+          <div class="hitos">
+            <div><b>2024</b><span>Primero empezás: las primeras cookies para amigos y familia.</span></div>
+            <div><b>2026</b><span>Luego mejorás: cocina profesional, ferias como Degusto y TV Ciudad.</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="seccion instagram blanco">
+      <div class="contenedor">
+        <span class="eyebrow">Seguinos</span>
+        <h2>@melaniasweets</h2>
+        <div class="fotos-ig">
+          <img src="img/ig-1.webp" alt="" loading="lazy" /><img src="img/ig-2.webp" alt="" loading="lazy" /><img src="img/ig-3.webp" alt="" loading="lazy" />
+          <img src="img/ig-4.webp" alt="" loading="lazy" /><img src="img/ig-5.webp" alt="" loading="lazy" /><img src="img/ig-6.webp" alt="" loading="lazy" />
+        </div>
+      </div>
+    </section>
+
+    <section id="contacto" class="seccion contacto">
+      <div class="contenedor">
+        <img class="iso" src="img/iso-color.svg" alt="" style="display:block;margin:0 auto 1rem;width:3rem;filter:brightness(0) invert(1)" />
+        <h2>¿Tenés algo especial en mente?</h2>
+        <p>Tortas personalizadas, mesas dulces o regalos para tu empresa: escribinos y lo armamos juntos.</p>
+        <div class="botones">
+          <a class="boton boton--lleno" href="#">Escribir por WhatsApp</a>
+          <a class="boton boton--borde" href="#">Pedir presupuesto</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="contenedor">
+      <div><img src="img/logo.webp" alt="Melania" width="805" height="408" style="height:3.5rem;width:auto;filter:brightness(0) invert(1)" /><p style="margin-top:1rem">Pequeños momentos que hacen más dulces tus días.</p></div>
+      <div><h3>Páginas</h3><ul><li><a href="#">Tienda</a></li><li><a href="#">Tu vitrina</a></li><li><a href="#">Catering</a></li><li><a href="#">Blog</a></li><li><a href="#">Preguntas frecuentes</a></li></ul></div>
+      <div><h3>Contacto</h3><ul><li>+598 93 340 227</li><li>@melaniasweets</li><li>www.melaniasweets.com</li></ul></div>
+    </div>
+    <small>© 2026 Melania Sweets</small>
+  </footer>
+</body>
+</html>
